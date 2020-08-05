@@ -1,0 +1,27 @@
+PODS:
+  - APIFire (0.1.0)
+  - Nimble (7.3.4)
+  - Quick (1.2.0)
+
+DEPENDENCIES:
+  - APIFire (from `../`)
+  - Nimble (~> 7.0)
+  - Quick (~> 1.2.0)
+
+SPEC REPOS:
+  trunk:
+    - Nimble
+    - Quick
+
+EXTERNAL SOURCES:
+  APIFire:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  APIFire: f0b4e56d618fd7456508201b4135877f424fec09
+  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+
+PODFILE CHECKSUM: 3514477923c93136a9294fba1979e3133a3b8f99
+
+COCOAPODS: 1.9.3

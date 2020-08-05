@@ -1,0 +1,22 @@
+{
+  "name": "APIFire",
+  "version": "0.1.0",
+  "summary": "A short description of APIFire.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Zack Sheppard/APIFire",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Zack Sheppard": "zack@zacksheppard.com"
+  },
+  "source": {
+    "git": "https://github.com/Zack Sheppard/APIFire.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "APIFire/Classes/**/*"
+}

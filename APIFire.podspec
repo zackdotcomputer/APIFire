@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'APIFire'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of APIFire.'
+  s.summary          = 'A lightweight toolkit for querying APIs, built on top of Alamofire.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,17 +18,25 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+APIFire is an opinionanted, encapsulated toolkit for defining APIs. It includes protocols for API servers and
+endpoints. It can form these into managed and easy to call structures that use Alamofire (and underlying native
+URLSession calls) to do over-the-wire communication, and uses Decodable to convert response JSON to usable models.
                        DESC
 
-  s.homepage         = 'https://github.com/Zack Sheppard/APIFire'
+  s.homepage         = 'https://github.com/zackdotcomputer/APIFire'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Zack Sheppard' => 'zack@zacksheppard.com' }
-  s.source           = { :git => 'https://github.com/Zack Sheppard/APIFire.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/zackdotcomputer/APIFire.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+# Copied from Alamofire 5.2.2 - intentionally mirrors their compatability
+  s.ios.deployment_target = '10.0'
+  s.osx.deployment_target = '10.12'
+  s.tvos.deployment_target = '10.0'
+  s.watchos.deployment_target = '3.0'
+
+  s.swift_versions = ['5.1', '5.2']
 
   s.source_files = 'APIFire/Classes/**/*'
   
@@ -38,5 +46,5 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'Alamofire', '~> 5.1'
 end
