@@ -46,5 +46,6 @@ URLSession calls) to do over-the-wire communication, and uses Decodable to conve
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'Alamofire', '~> 5.1'
+  s.dependency 'Alamofire', '~> 5.2'
+  s.dependency 'Logging', '~> 1.2'
 end

@@ -15,7 +15,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
-This project is in Swift 5.1+ and built on top of [Alamofire](https://github.com/Alamofire/Alamofire) 5.1+. Both of those are required.
+This project is in Swift 5.1+ and built on top of [Alamofire](https://github.com/Alamofire/Alamofire) 5.2. Both of those are required.
 
 ## Installation
 

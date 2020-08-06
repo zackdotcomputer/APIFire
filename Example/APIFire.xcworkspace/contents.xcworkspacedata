@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:APIFire.xcodeproj">
+      location = "group:/Users/zack/code/personal/opensource/APIFire/Example/APIFire Example.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
