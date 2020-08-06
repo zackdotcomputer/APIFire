@@ -24,7 +24,7 @@ public protocol DownloadToFileEndpoint: DownloadEndpoint {
     func callEnded(_ result: AFDownloadResponse<URL?>)
 }
 
-extension DownloadToFileEndpoint {
+public extension DownloadToFileEndpoint {
     func startCall(_ call: DownloadRequest) {
         call.response(completionHandler: { self.callEnded($0) })
     }

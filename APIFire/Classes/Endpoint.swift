@@ -54,7 +54,7 @@ public protocol PreflightValidation: Endpoint {
 
 // MARK: - Default values
 
-extension Endpoint {
+public extension Endpoint {
     // NOTE(zack): The default timeout will cause the call to be processed by the shared Alamofire instance.
     // If you customize this value, it may cause the creation of a new Alamofire Session.
     var timeout: TimeInterval {

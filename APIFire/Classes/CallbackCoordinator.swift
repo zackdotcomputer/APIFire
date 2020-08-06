@@ -14,6 +14,8 @@ public typealias EndpointCompletionBlock<ResponseType> = (_ result: Swift.Result
 public final class CallbackCoordinator<ResponseObject> {
     private var allCompletionCalls: [EndpointCompletionBlock<ResponseObject>] = []
 
+    public init() {}
+
     /// - Parameter callback: A completion block to be called when this coordinator wraps up.
     func addCallback(_ callback: @escaping EndpointCompletionBlock<ResponseObject>) {
         allCompletionCalls.append(callback)

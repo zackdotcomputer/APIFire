@@ -31,7 +31,7 @@ public protocol DeserializingEndpoint: DataEndpoint {
     ) -> Swift.Result<ResponseObject, Error>
 }
 
-extension DeserializingEndpoint {
+public extension DeserializingEndpoint {
     /// Convenience method to add a callback handler and then start this endpoint call on the shared
     /// APIManager instance
     /// - Parameter completionCallback: The closure to call when the endpoint completes.
@@ -48,7 +48,7 @@ extension DeserializingEndpoint {
 
 // MARK: - Default Implementations of upstream protocol methods
 
-extension DeserializingEndpoint {
+public extension DeserializingEndpoint {
     func startCall(_ call: DataRequest) {
         call.responseDecodable {
             self.handleResult(self.transformResponse(alamoResponse: $0))
@@ -56,7 +56,7 @@ extension DeserializingEndpoint {
     }
 }
 
-extension PreflightValidation where Self: DeserializingEndpoint {
+public extension PreflightValidation where Self: DeserializingEndpoint {
     /// Default implementation of a preflight failure is to try to digest the error and handle it.
     func preflightFailed(_ failure: Error) {
         handleResult(transformError(failure))
@@ -65,7 +65,7 @@ extension PreflightValidation where Self: DeserializingEndpoint {
 
 // MARK: - Default Implementation for Deserialization Handling
 
-extension DeserializingEndpoint {
+public extension DeserializingEndpoint {
     func transformResponse(
         alamoResponse: AFDataResponse<ResponseObject>
     ) -> Swift.Result<ResponseObject, Error> {
