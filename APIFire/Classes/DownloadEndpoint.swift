@@ -8,13 +8,13 @@
 import Foundation
 import Alamofire
 
-protocol DownloadEndpoint: Endpoint {
+public protocol DownloadEndpoint: Endpoint {
     /// The function that the APIManager will call with the created Request to initiate it.
     func startCall(_ call: DownloadRequest)
 }
 
 /// A subtype of the DownloadEndpoint that saves the result to a file.
-protocol DownloadToFileEndpoint: DownloadEndpoint {
+public protocol DownloadToFileEndpoint: DownloadEndpoint {
     /// The destination for this download request. The downloaded data will be written there and the file URL passed
     /// to the callEnded(_:) endpoint.
     var destination: DownloadRequest.Destination { get }

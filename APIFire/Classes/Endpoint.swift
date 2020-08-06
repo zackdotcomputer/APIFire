@@ -11,10 +11,10 @@ import Alamofire
 
 /// Typealias for a generic parameter structure for endpoint calls
 /// Overrides the Alamofire.Parameters type to allow explicitly for optional values
-typealias EndpointParameters = [ String : Any? ]
+public typealias EndpointParameters = [ String : Any? ]
 
 /// The most generic form for defining how to make an API call
-protocol Endpoint {
+public protocol Endpoint {
     /// The URL that will be requested
     var completeURL: URL { get }
 
@@ -36,13 +36,13 @@ protocol Endpoint {
 
 // MARK: - Specialization subprotocols
 
-protocol DataEndpoint: Endpoint {
+public protocol DataEndpoint: Endpoint {
     /// The function that the APIManager will call with the created Request to initiate it.
     func startCall(_ call: DataRequest)
 }
 
 /// Adds preflight validation and a related callback hook for the Endpoint protocol.
-protocol PreflightValidation: Endpoint {
+public protocol PreflightValidation: Endpoint {
     /// Called before APIFire attempts to make the endpoint call to allow you the chance to abort the call because of invalid state
     /// - Throws: Any error you'd like. If you throw, the call will not proceed and the error will be passed to the `preflightFailed(_:)` func.
     func validatePreflight() throws

@@ -11,7 +11,7 @@ import Alamofire
 
 /// A protocol building on the `DataEndpoint` that adds automatic deserialization.
 /// - Note: Implementations of this protocol **must not** implement the `callEnded(_:)` method if they wish to receive the deserialization functionality.
-protocol DeserializingEndpoint: DataEndpoint {
+public protocol DeserializingEndpoint: DataEndpoint {
     associatedtype ResponseObject: Decodable
 
     /// This coordinator serves two purposes. One, it's a handy way to declare what type your Endpoint
