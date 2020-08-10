@@ -50,8 +50,16 @@ public extension DeserializingEndpoint {
 
 public extension DeserializingEndpoint {
     func startCall(_ call: DataRequest) {
-        call.responseDecodable {
-            self.handleResult(self.transformResponse(alamoResponse: $0))
+        if let loggableSelf = self as? WithLogging {
+            loggableSelf.logAtStartOfCall()
+        }
+
+        call.responseDecodable { (r: AFDataResponse<ResponseObject>) in
+            if let loggableSelf = self as? WithLogging {
+                loggableSelf.logCallCompletion(response: r)
+            }
+
+            self.handleResult(self.transformResponse(alamoResponse: r))
         }
     }
 }

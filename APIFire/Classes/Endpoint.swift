@@ -61,7 +61,8 @@ public protocol DownloadToFileEndpoint: DownloadEndpoint {
 
 // MARK: - Extra Feature Protocols
 
-/// Adds preflight validation and a related callback hook for the Endpoint protocol.
+/// Adds preflight validation and a related callback hook for the `Endpoint` protocol.
+/// This is done automatically and ensured no matter how you subclass `Endpoint`.
 public protocol PreflightValidation: Endpoint {
     /// Called before APIFire attempts to make the endpoint call to allow you the chance to abort the call because of invalid state
     /// - Throws: Any error you'd like. If you throw, the call will not proceed and the error will be passed to the `preflightFailed(_:)` func.
@@ -70,6 +71,14 @@ public protocol PreflightValidation: Endpoint {
     /// Called if the validatePreflight step fails, allowing callback interceptors a chance to pass that failure on to listeners.
     /// - Parameter failure: The error that was thrown by the `validatePreflight` call
     func preflightFailed(_ failure: Error)
+}
+
+/// Adds custom logging hooks for your Endpoint
+/// - NOTE: This is implemented by the default implementations in the library. However, if you override the `startCall` function or create your
+///   own implementers of `Endpoint`, you are responsible for detecting and calling these methods as appropriate.
+public protocol WithLogging: Endpoint {
+    func logAtStartOfCall()
+    func logCallCompletion<ResponseType>(response: ResponseType)
 }
 
 // MARK: - Default values
@@ -104,6 +113,25 @@ public extension Endpoint {
 
 public extension DownloadToFileEndpoint {
     func startCall(_ call: DownloadRequest) {
-        call.response(completionHandler: { self.callEnded($0) })
+        if let loggableSelf = self as? WithLogging {
+            loggableSelf.logAtStartOfCall()
+        }
+        call.response(completionHandler: { (response: DownloadResponse) in
+            if let loggableSelf = self as? WithLogging {
+                loggableSelf.logCallCompletion(response: response)
+            }
+
+            self.callEnded(response)
+        })
+    }
+}
+
+public extension WithLogging {
+    func logAtStartOfCall() {
+        /* Default to no-op */
+    }
+
+    func logCallCompletion<ResponseType>(response: ResponseType) {
+        /* Default to no-op */
     }
 }
