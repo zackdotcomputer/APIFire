@@ -14,6 +14,9 @@ import Alamofire
 public protocol DeserializingEndpoint: DataEndpoint {
     associatedtype ResponseObject: Decodable
 
+    /// The queue on which to run the Alamofire call and, relatedly, the onCompletion blocks
+    var queue: DispatchQueue { get }
+
     /// This coordinator serves two purposes. One, it's a handy way to declare what type your Endpoint
     /// expects the `ResponseObject` to be. Two, it functionally manages the closures waiting to hear the
     /// result of this endpoint call.
@@ -49,12 +52,17 @@ public extension DeserializingEndpoint {
 // MARK: - Default Implementations of upstream protocol methods
 
 public extension DeserializingEndpoint {
+    // Maintain the Alamofire default of executing on main
+    var queue: DispatchQueue {
+        return .main
+    }
+
     func startCall(_ call: DataRequest) {
         if let loggableSelf = self as? WithLogging {
             loggableSelf.logAtStartOfCall()
         }
 
-        call.responseDecodable { (r: AFDataResponse<ResponseObject>) in
+        call.responseDecodable(queue: self.queue) { (r: AFDataResponse<ResponseObject>) in
             if let loggableSelf = self as? WithLogging {
                 loggableSelf.logCallCompletion(response: r)
             }

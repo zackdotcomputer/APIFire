@@ -50,6 +50,9 @@ public protocol DownloadEndpoint: Endpoint {
 
 /// A subtype of the DownloadEndpoint that saves the result to a file.
 public protocol DownloadToFileEndpoint: DownloadEndpoint {
+    /// The queue on which to run the request and the callEnded function
+    var queue: DispatchQueue { get }
+
     /// The destination for this download request. The downloaded data will be written there and the file URL passed
     /// to the callEnded(_:) endpoint.
     var destination: DownloadRequest.Destination { get }
@@ -112,17 +115,21 @@ public extension Endpoint {
 }
 
 public extension DownloadToFileEndpoint {
+    var queue: DispatchQueue {
+        return .main
+    }
+
     func startCall(_ call: DownloadRequest) {
         if let loggableSelf = self as? WithLogging {
             loggableSelf.logAtStartOfCall()
         }
-        call.response(completionHandler: { (response: DownloadResponse) in
+        call.response(queue: self.queue) { (response: DownloadResponse) in
             if let loggableSelf = self as? WithLogging {
                 loggableSelf.logCallCompletion(response: response)
             }
 
             self.callEnded(response)
-        })
+        }
     }
 }
 
