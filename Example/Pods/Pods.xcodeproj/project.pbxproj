@@ -598,7 +598,7 @@
 			path = Nimble;
 			sourceTree = "<group>";
 		};
-		144BAA6A24DB396400391298 /* Classes */ = {
+		144BAA6A24DB396400391298 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				144BAA6B24DB3A1F00391298 /* APIManager.swift */,
@@ -610,8 +610,8 @@
 				B275D660C58A803B22B796F3296850AA /* Utilities.swift */,
 				1471E10924E0EF1C00CA2282 /* NoResponse.swift */,
 			);
-			name = Classes;
-			path = APIFire/Classes;
+			name = src;
+			path = APIFire/src;
 			sourceTree = "<group>";
 		};
 		19EAC72F8A6214A24C93BF4576667C42 /* Targets Support Files */ = {
@@ -762,7 +762,7 @@
 		A383824059AB78FAD96AA81506D07FEE /* APIFire */ = {
 			isa = PBXGroup;
 			children = (
-				144BAA6A24DB396400391298 /* Classes */,
+				144BAA6A24DB396400391298 /* src */,
 				99B1CD6BCB241F9FF7A9272A03087E7F /* Pod */,
 				04715EC22242506A550247643E694D95 /* Support Files */,
 			);

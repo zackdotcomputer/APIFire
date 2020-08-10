@@ -38,7 +38,7 @@ URLSession calls) to do over-the-wire communication, and uses Decodable to conve
 
   s.swift_versions = ['5.1', '5.2']
 
-  s.source_files = 'APIFire/Classes/**/*'
+  s.source_files = 'APIFire/src/**/*'
   
   # s.resource_bundles = {
   #   'APIFire' => ['APIFire/Assets/*.png']
