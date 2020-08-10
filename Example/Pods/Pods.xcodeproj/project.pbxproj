@@ -601,17 +601,25 @@
 		144BAA6A24DB396400391298 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				144BAA6B24DB3A1F00391298 /* APIManager.swift */,
+				1471E10C24E0F58F00CA2282 /* internal */,
 				EC171177E3895B7DF01C910ABE099855 /* CallbackCoordinator.swift */,
 				7F1C178310CDA804A78B7F7932A78C19 /* Endpoint.swift */,
-				D0F6BEE1AA73C52FAF1FC9315BD92225 /* EndpointConstants.swift */,
 				5354618CC0FEC9F8FF8B6863DFFC5856 /* DeserializingEndpoint.swift */,
 				14EB93AF24DBB4DF00B3A19F /* ResponseErrors.swift */,
-				B275D660C58A803B22B796F3296850AA /* Utilities.swift */,
 				1471E10924E0EF1C00CA2282 /* NoResponse.swift */,
 			);
 			name = src;
 			path = APIFire/src;
+			sourceTree = "<group>";
+		};
+		1471E10C24E0F58F00CA2282 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				D0F6BEE1AA73C52FAF1FC9315BD92225 /* EndpointConstants.swift */,
+				144BAA6B24DB3A1F00391298 /* APIManager.swift */,
+				B275D660C58A803B22B796F3296850AA /* Utilities.swift */,
+			);
+			path = internal;
 			sourceTree = "<group>";
 		};
 		19EAC72F8A6214A24C93BF4576667C42 /* Targets Support Files */ = {
