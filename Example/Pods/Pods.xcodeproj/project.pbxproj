@@ -23,7 +23,6 @@
 		1246737DFF5F222B4BB30DED0B9A93F7 /* APIFire-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B11D27B16222A8D0A7864F63724F3C4 /* APIFire-dummy.m */; };
 		1291696393FFEA6F94FF1E0B79923B43 /* HooksPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF914E48EF1DC7074F4ADA4ADAE575 /* HooksPhase.swift */; };
 		144BAA6C24DB3A1F00391298 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144BAA6B24DB3A1F00391298 /* APIManager.swift */; };
-		14C6358924DB986400F364F5 /* DownloadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C6358824DB986400F364F5 /* DownloadEndpoint.swift */; };
 		14EB93B124DBB5D200B3A19F /* ResponseErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EB93AF24DBB4DF00B3A19F /* ResponseErrors.swift */; };
 		1662BEDD868AF1CD729C4269E69A3580 /* MatcherFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFECD5A453176269030F1B0C3E5A0BDE /* MatcherFunc.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		1E87C51D297EA030E7BC5F7EB4D334C3 /* AuthenticationInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B58F26E2D9F8F51445FD2E6ED8106 /* AuthenticationInterceptor.swift */; };
@@ -244,7 +243,6 @@
 		0FED7C7DE37F4C6A27CC479F30BDCAD2 /* NimbleXCTestHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimbleXCTestHandler.swift; path = Sources/Nimble/Adapters/NimbleXCTestHandler.swift; sourceTree = "<group>"; };
 		109EA863E0A099CA41D2B63C1807F482 /* Nimble.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Nimble.h; path = Sources/Nimble/Nimble.h; sourceTree = "<group>"; };
 		144BAA6B24DB3A1F00391298 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		14C6358824DB986400F364F5 /* DownloadEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadEndpoint.swift; sourceTree = "<group>"; };
 		14EB93AF24DBB4DF00B3A19F /* ResponseErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseErrors.swift; sourceTree = "<group>"; };
 		17DD81D422888B0128436CE2CC01F1DF /* Quick-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Quick-dummy.m"; sourceTree = "<group>"; };
 		18E60A22F091E0EFBCCDE7AE0290402A /* QuickSpec.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QuickSpec.m; path = Sources/QuickObjectiveC/QuickSpec.m; sourceTree = "<group>"; };
@@ -605,7 +603,6 @@
 				EC171177E3895B7DF01C910ABE099855 /* CallbackCoordinator.swift */,
 				7F1C178310CDA804A78B7F7932A78C19 /* Endpoint.swift */,
 				D0F6BEE1AA73C52FAF1FC9315BD92225 /* EndpointConstants.swift */,
-				14C6358824DB986400F364F5 /* DownloadEndpoint.swift */,
 				5354618CC0FEC9F8FF8B6863DFFC5856 /* DeserializingEndpoint.swift */,
 				14EB93AF24DBB4DF00B3A19F /* ResponseErrors.swift */,
 				B275D660C58A803B22B796F3296850AA /* Utilities.swift */,
@@ -1193,7 +1190,6 @@
 				14EB93B124DBB5D200B3A19F /* ResponseErrors.swift in Sources */,
 				5C90C4D90F2EAED427F9468505F91932 /* DeserializingEndpoint.swift in Sources */,
 				A0F8F4A22A3E75CD5F34E8930053DDB8 /* Utilities.swift in Sources */,
-				14C6358924DB986400F364F5 /* DownloadEndpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

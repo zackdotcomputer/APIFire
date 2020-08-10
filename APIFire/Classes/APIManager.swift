@@ -10,9 +10,10 @@ import Foundation
 import Alamofire
 
 /// The singleton object that coordinates the Alamofire Session objects to perform API calls.
-final class APIManager {
+internal final class APIManager {
     static private var __singleton: APIManager? = nil
 
+    /// The shared instance of the API Manager
     static var shared: APIManager {
         if let oneoff = __singleton {
             return oneoff

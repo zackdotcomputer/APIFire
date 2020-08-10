@@ -17,7 +17,7 @@ public final class CallbackCoordinator<ResponseObject> {
     public init() {}
 
     /// - Parameter callback: A completion block to be called when this coordinator wraps up.
-    func addCallback(_ callback: @escaping EndpointCompletionBlock<ResponseObject>) {
+    public func addCallback(_ callback: @escaping EndpointCompletionBlock<ResponseObject>) {
         allCompletionCalls.append(callback)
     }
 

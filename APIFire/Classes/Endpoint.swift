@@ -34,12 +34,32 @@ public protocol Endpoint {
     var parameterEncoding: ParameterEncoding { get }
 }
 
-// MARK: - Specialization subprotocols
+// MARK: - Specialization protocols
 
+/// An endpoint that expects data returned over HTTP
 public protocol DataEndpoint: Endpoint {
     /// The function that the APIManager will call with the created Request to initiate it.
     func startCall(_ call: DataRequest)
 }
+
+/// An endpoint that downloads data to memory or disk
+public protocol DownloadEndpoint: Endpoint {
+    /// The function that the APIManager will call with the created Request to initiate it.
+    func startCall(_ call: DownloadRequest)
+}
+
+/// A subtype of the DownloadEndpoint that saves the result to a file.
+public protocol DownloadToFileEndpoint: DownloadEndpoint {
+    /// The destination for this download request. The downloaded data will be written there and the file URL passed
+    /// to the callEnded(_:) endpoint.
+    var destination: DownloadRequest.Destination { get }
+
+    /// Get a callback when the call has ended. Note that a call to this function does NOT mean the call succeeded, as
+    /// the response can still contain no response and an error instead.
+    func callEnded(_ result: AFDownloadResponse<URL?>)
+}
+
+// MARK: - Extra Feature Protocols
 
 /// Adds preflight validation and a related callback hook for the Endpoint protocol.
 public protocol PreflightValidation: Endpoint {
@@ -79,5 +99,11 @@ public extension Endpoint {
 
     var headers: HTTPHeaders {
         return [:]
+    }
+}
+
+public extension DownloadToFileEndpoint {
+    func startCall(_ call: DownloadRequest) {
+        call.response(completionHandler: { self.callEnded($0) })
     }
 }
