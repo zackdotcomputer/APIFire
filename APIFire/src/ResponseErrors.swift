@@ -11,9 +11,9 @@ import Alamofire
 
 /// A generic root class for errors that happen while trying to deal with problems with the Alamofire response
 public class ResponseError<SuccessType>: Error {
-    let response: AFDataResponse<SuccessType>
+    public let response: AFDataResponse<SuccessType>
 
-    var aferror: AFError? {
+    public var aferror: AFError? {
         return response.error
     }
 
@@ -27,7 +27,7 @@ public class TimeoutError<SuccessType>: ResponseError<SuccessType> {}
 
 /// An error for when an endpoint returns a non-200 repsonse with a deserializable body
 public class NotOkResponseError<SuccessType>: ResponseError<SuccessType> {
-    var serverResponse: SuccessType? {
+    public var serverResponse: SuccessType? {
         return self.response.value
     }
 }
