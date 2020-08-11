@@ -32,34 +32,8 @@ public protocol Endpoint {
 
     /// How to encode the parameters - default is JSON for POST and QueryString for GET requests
     var parameterEncoding: ParameterEncoding { get }
-}
 
-// MARK: - Specialization protocols
-
-/// An endpoint that expects data returned over HTTP
-public protocol DataEndpoint: Endpoint {
-    /// The function that the APIManager will call with the created Request to initiate it.
-    func startCall(_ call: DataRequest)
-}
-
-/// An endpoint that downloads data to memory or disk
-public protocol DownloadEndpoint: Endpoint {
-    /// The function that the APIManager will call with the created Request to initiate it.
-    func startCall(_ call: DownloadRequest)
-}
-
-/// A subtype of the DownloadEndpoint that saves the result to a file.
-public protocol DownloadToFileEndpoint: DownloadEndpoint {
-    /// The queue on which to run the request and the callEnded function
-    var queue: DispatchQueue { get }
-
-    /// The destination for this download request. The downloaded data will be written there and the file URL passed
-    /// to the callEnded(_:) endpoint.
-    var destination: DownloadRequest.Destination { get }
-
-    /// Get a callback when the call has ended. Note that a call to this function does NOT mean the call succeeded, as
-    /// the response can still contain no response and an error instead.
-    func callEnded(_ result: AFDownloadResponse<URL?>)
+    func startCall(inSession session: Session)
 }
 
 // MARK: - Extra Feature Protocols
@@ -111,25 +85,6 @@ public extension Endpoint {
 
     var headers: HTTPHeaders {
         return [:]
-    }
-}
-
-public extension DownloadToFileEndpoint {
-    var queue: DispatchQueue {
-        return .main
-    }
-
-    func startCall(_ call: DownloadRequest) {
-        if let loggableSelf = self as? WithLogging {
-            loggableSelf.logAtStartOfCall()
-        }
-        call.response(queue: self.queue) { (response: DownloadResponse) in
-            if let loggableSelf = self as? WithLogging {
-                loggableSelf.logCallCompletion(response: response)
-            }
-
-            self.callEnded(response)
-        }
     }
 }
 

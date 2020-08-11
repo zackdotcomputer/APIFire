@@ -30,7 +30,7 @@ internal final class APIManager {
 
     /// Perform the Endpoint call using an existing Session, or creating a new one if needs be.
     /// - Parameter endpoint: The Endpoint object to call.
-    func call(_ endpoint: DataEndpoint) {
+    func call(_ endpoint: Endpoint) {
         guard let session = buildSessionAndValidate(for: endpoint) else {
             // The preflight failed but should have been logged and called back by the build function
             return
@@ -38,41 +38,7 @@ internal final class APIManager {
 
         aflog.info("APIFire: Starting call...\n\tEndpoint: \(endpoint.completeURL)\n\tMethod: \(endpoint.httpMethod)\n\tParams: \(endpoint.parameters)")
 
-        // Setup the request...
-        let request = session.request(
-            endpoint.completeURL,
-            method: endpoint.httpMethod,
-            parameters: endpoint.parameters as Parameters,
-            encoding: endpoint.parameterEncoding,
-            headers: endpoint.headers
-        )
-
-        endpoint.startCall(request)
-    }
-
-    /// Queue a download with an existing Session, or creating a new one if needs be.
-    /// - Parameter endpoint: The Endpoint object to call.
-    func download(_ endpoint: DownloadEndpoint) {
-        guard let session = buildSessionAndValidate(for: endpoint) else {
-            // The preflight failed but should have been logged and called back by the build function
-            return
-        }
-
-        aflog.info("APIFire: Starting download...\n\tEndpoint: \(endpoint.completeURL)\n\tMethod: \(endpoint.httpMethod)\n\tParams: \(endpoint.parameters)")
-
-        let destination = (endpoint as? DownloadToFileEndpoint)?.destination
-
-        // Setup the request...
-        let task = session.download(
-            endpoint.completeURL,
-            method: endpoint.httpMethod,
-            parameters: endpoint.parameters as Parameters,
-            encoding: endpoint.parameterEncoding,
-            headers: endpoint.headers,
-            to: destination
-        )
-
-        endpoint.startCall(task)
+        endpoint.startCall(inSession: session)
     }
 
     private func buildSessionAndValidate(for endpoint: Endpoint) -> Session? {

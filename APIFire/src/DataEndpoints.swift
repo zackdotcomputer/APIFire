@@ -1,5 +1,5 @@
 //
-//  DeserializingEndpoint.swift
+//  DataEndpoints.swift
 //  APIFire
 //
 //  Created by Zack Sheppard on 8/5/20.
@@ -8,6 +8,9 @@
 import Foundation
 
 import Alamofire
+
+/// An endpoint that expects data returned over HTTP
+public protocol DataEndpoint: Endpoint {}
 
 /// A protocol building on the `DataEndpoint` that adds automatic deserialization.
 /// - Note: Implementations of this protocol **must not** implement the `callEnded(_:)` method if they wish to receive the deserialization functionality.
@@ -57,7 +60,15 @@ public extension DeserializingEndpoint {
         return .main
     }
 
-    func startCall(_ call: DataRequest) {
+    func startCall(inSession session: Session) {
+        let call = session.request(
+            completeURL,
+            method: httpMethod,
+            parameters: parameters as Parameters,
+            encoding: parameterEncoding,
+            headers: headers
+        )
+
         if let loggableSelf = self as? WithLogging {
             loggableSelf.logAtStartOfCall()
         }
