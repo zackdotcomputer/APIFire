@@ -75,6 +75,7 @@ internal final class APIManager {
             } catch {
                 aflog.warning("Download from \(endpoint.completeURL) failed in preflight\n\(String(describing: error))")
                 toValidate.preflightFailed(error)
+                return
             }
         }
 
