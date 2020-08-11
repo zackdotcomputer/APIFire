@@ -31,24 +31,9 @@ internal final class APIManager {
     /// Perform the Endpoint call using an existing Session, or creating a new one if needs be.
     /// - Parameter endpoint: The Endpoint object to call.
     func call(_ endpoint: DataEndpoint) {
-        if let toValidate = endpoint as? PreflightValidation {
-            // Check preflight
-            do {
-                try toValidate.validatePreflight()
-            } catch {
-                aflog.warning("Call to \(endpoint.completeURL) failed in preflight\n\(String(describing: error))")
-                toValidate.preflightFailed(error)
-            }
-        }
-
-        // Make sure we have an AF Session that has the right timeout
-        let session: Session
-        if let existing = alamofireSessions[endpoint.timeout] {
-            session = existing
-        } else {
-            aflog.trace("APIFire: Creating new alamofire instance for timeout \(endpoint.timeout)")
-            session = alamoFireWithCustomTimeout(endpoint.timeout)
-            alamofireSessions[endpoint.timeout] = session
+        guard let session = buildSessionAndValidate(for: endpoint) else {
+            // The preflight failed but should have been logged and called back by the build function
+            return
         }
 
         aflog.info("APIFire: Starting call...\n\tEndpoint: \(endpoint.completeURL)\n\tMethod: \(endpoint.httpMethod)\n\tParams: \(endpoint.parameters)")
@@ -68,28 +53,12 @@ internal final class APIManager {
     /// Queue a download with an existing Session, or creating a new one if needs be.
     /// - Parameter endpoint: The Endpoint object to call.
     func download(_ endpoint: DownloadEndpoint) {
-        if let toValidate = endpoint as? PreflightValidation {
-            // Check preflight
-            do {
-                try toValidate.validatePreflight()
-            } catch {
-                aflog.warning("Download from \(endpoint.completeURL) failed in preflight\n\(String(describing: error))")
-                toValidate.preflightFailed(error)
-                return
-            }
+        guard let session = buildSessionAndValidate(for: endpoint) else {
+            // The preflight failed but should have been logged and called back by the build function
+            return
         }
 
-        // Make sure we have an AF Session that has the right timeout
-        let session: Session
-        if let existing = alamofireSessions[endpoint.timeout] {
-            session = existing
-        } else {
-            aflog.trace("APIFire: Creating new alamofire instance for timeout \(endpoint.timeout)")
-            session = alamoFireWithCustomTimeout(endpoint.timeout)
-            alamofireSessions[endpoint.timeout] = session
-        }
-
-        aflog.info("APIFire: Starting call...\n\tEndpoint: \(endpoint.completeURL)\n\tMethod: \(endpoint.httpMethod)\n\tParams: \(endpoint.parameters)")
+        aflog.info("APIFire: Starting download...\n\tEndpoint: \(endpoint.completeURL)\n\tMethod: \(endpoint.httpMethod)\n\tParams: \(endpoint.parameters)")
 
         let destination = (endpoint as? DownloadToFileEndpoint)?.destination
 
@@ -104,5 +73,30 @@ internal final class APIManager {
         )
 
         endpoint.startCall(task)
+    }
+
+    private func buildSessionAndValidate(for endpoint: Endpoint) -> Session? {
+        if let toValidate = endpoint as? PreflightValidation {
+            // Check preflight
+            do {
+                try toValidate.validatePreflight()
+            } catch {
+                aflog.warning("Download from \(endpoint.completeURL) failed in preflight\n\(String(describing: error))")
+                toValidate.preflightFailed(error)
+                return nil
+            }
+        }
+
+        // Make sure we have an AF Session that has the right timeout
+        let session: Session
+        if let existing = alamofireSessions[endpoint.timeout] {
+            session = existing
+        } else {
+            aflog.trace("APIFire: Creating new alamofire instance for timeout \(endpoint.timeout)")
+            session = alamoFireWithCustomTimeout(endpoint.timeout)
+            alamofireSessions[endpoint.timeout] = session
+        }
+
+        return session
     }
 }
