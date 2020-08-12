@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import Alamofire
 
 /// The standard type for the completion block of an endpoint.
-public typealias EndpointCompletionBlock<ResponseType> = (_ result: Swift.Result<ResponseType, Error>) -> Void
+public typealias EndpointCompletionBlock<ResponseType> = (EndpointResult<ResponseType>) -> ()
 
 /// A coordinator to chain together the various callbacks that a request-in-progress might be told to call back to.
 public final class CallbackCoordinator<ResponseObject> {
@@ -23,7 +24,7 @@ public final class CallbackCoordinator<ResponseObject> {
 
     /// Execute all the chained callbacks sequentially.
     /// - Parameter result: The object to pass to each callback
-    func callCompleted(_ result: Swift.Result<ResponseObject, Error>) {
+    public func callCompleted(_ result: EndpointResult<ResponseObject>) {
         allCompletionCalls.forEach { (callback) in
             callback(result)
         }

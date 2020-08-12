@@ -14,45 +14,48 @@ public protocol DataEndpoint: Endpoint {}
 
 /// A protocol building on the `DataEndpoint` that adds automatic deserialization.
 /// - Note: Implementations of this protocol **must not** implement the `callEnded(_:)` method if they wish to receive the deserialization functionality.
-public protocol DeserializingEndpoint: DataEndpoint {
-    associatedtype ResponseObject: Decodable
+public protocol DeserializingEndpoint: DataEndpoint, CallableEndpoint where ResponseType: Decodable {
+    /// This coordinator serves two purposes. One, it's a handy way to declare what type your Endpoint
+    /// expects the `ResponseType` to be. Two, it functionally manages the closures waiting to hear the
+    /// result of this endpoint call.
+    var onCompletion: CallbackCoordinator<ResponseType> { get }
 
     /// The queue on which to run the Alamofire call and, relatedly, the onCompletion blocks
     var queue: DispatchQueue { get }
 
-    /// This coordinator serves two purposes. One, it's a handy way to declare what type your Endpoint
-    /// expects the `ResponseObject` to be. Two, it functionally manages the closures waiting to hear the
-    /// result of this endpoint call.
-    var onCompletion: CallbackCoordinator<ResponseObject> { get }
-
     /// Transform an error thrown preflight. By default, passes the `Error` to the callbacks untransformed.
-    /// You can add a custom handler to digest error messages into meaningful `ResponseObject`s.
-    func transformError(_ error: Error) -> Swift.Result<ResponseObject, Error>
+    /// You can add a custom handler to digest error messages into meaningful `ResponseType`s.
+    func transformError(_ error: Error) -> EndpointResult<ResponseType>
 
     /// If a response is received and deserialized, this function is given a chance to parse the `AFDataResponse` into the proper `Result`.
     /// - Parameter alamoResponse: The response from the Alamofire layer - could be a failure.
     /// - Returns: The synthesized `Result` holding either a valid response object or error, which will be given to the callbacks.
     func transformResponse(
-        alamoResponse: AFDataResponse<ResponseObject>
-    ) -> Swift.Result<ResponseObject, Error>
+        alamoResponse: AFDataResponse<ResponseType>
+    ) -> EndpointResult<ResponseType>
 }
+
+// MARK: - Default Implementations of upstream protocol methods
 
 public extension DeserializingEndpoint {
     /// Convenience method to add a callback handler and then start this endpoint call on the shared
     /// APIManager instance
     /// - Parameter completionCallback: The closure to call when the endpoint completes.
     func call(
-        onCompletion completionCallback: EndpointCompletionBlock<ResponseObject>? = nil
+        onCompletion completionCallback: @escaping EndpointCompletionBlock<ResponseType>
     ) {
-        if let callback = completionCallback {
-            onCompletion.addCallback(callback)
-        }
+        onCompletion.addCallback(completionCallback)
 
-        APIManager.shared.call(self)
+        APIFireSessionManager.shared.call(containedEndpoint: CallableContainer(endpoint: self), onCompletion: { (r: EndpointResult<ResponseType>) in
+            self.handleResult(r)
+        })
+    }
+
+    // Handle result call just calls the completion callback
+    fileprivate func handleResult(_ result: EndpointResult<ResponseType>) {
+        onCompletion.callCompleted(result)
     }
 }
-
-// MARK: - Default Implementations of upstream protocol methods
 
 public extension DeserializingEndpoint {
     // Maintain the Alamofire default of executing on main
@@ -60,7 +63,7 @@ public extension DeserializingEndpoint {
         return .main
     }
 
-    func startCall(inSession session: Session) {
+    func startCall(inSession session: Session, completion: @escaping EndpointCompletionBlock<ResponseType>) {
         let call = session.request(
             completeURL,
             method: httpMethod,
@@ -73,12 +76,12 @@ public extension DeserializingEndpoint {
             loggableSelf.logAtStartOfCall()
         }
 
-        call.responseDecodable(queue: self.queue) { (r: AFDataResponse<ResponseObject>) in
+        call.responseDecodable(queue: self.queue) { (r: AFDataResponse<ResponseType>) in
             if let loggableSelf = self as? WithLogging {
                 loggableSelf.logCallCompletion(response: r)
             }
 
-            self.handleResult(self.transformResponse(alamoResponse: r))
+            completion(self.transformResponse(alamoResponse: r))
         }
     }
 }
@@ -94,34 +97,27 @@ public extension PreflightValidation where Self: DeserializingEndpoint {
 
 public extension DeserializingEndpoint {
     func transformResponse(
-        alamoResponse: AFDataResponse<ResponseObject>
-    ) -> Swift.Result<ResponseObject, Error> {
+        alamoResponse: AFDataResponse<ResponseType>
+    ) -> EndpointResult<ResponseType> {
         let statusCode = StatusCodes(rawValue: alamoResponse.response?.statusCode ?? -1)
 
         switch statusCode {
         case .success:
             guard let deserialized = alamoResponse.value else {
-                return .failure(MalformedBodyError(response: alamoResponse))
+                return EndpointResult(error: MalformedBodyErrorWithResponse(response: alamoResponse))
             }
 
-            return .success(deserialized)
+            return EndpointResult(value: deserialized)
         case .timeout:
-            return .failure(TimeoutError(response: alamoResponse))
+            return EndpointResult(error: TimeoutErrorWithResponse(response: alamoResponse))
         case nil:
-            return .failure(NotOkResponseError(response: alamoResponse))
+            return EndpointResult(error: NotOkResponseError(response: alamoResponse), value: alamoResponse.value)
         }
     }
 
     /// `Error` objects just get digested as failures by default. If you'd like, you may add a
     /// custom handler to serialize the Error into a usable `ResponseObject` type.
-    func transformError(_ error: Error) -> Swift.Result<ResponseObject, Error> {
-        return .failure(error)
-    }
-}
-
-fileprivate extension DeserializingEndpoint {
-    // Handle result call just calls the completion callback
-    func handleResult(_ result: Swift.Result<ResponseObject, Error>) {
-        onCompletion.callCompleted(result)
+    func transformError(_ error: Error) -> EndpointResult<ResponseType> {
+        return EndpointResult(error: error)
     }
 }

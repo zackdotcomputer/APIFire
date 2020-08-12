@@ -22,10 +22,13 @@
 		11EDFDE1BC5494E14D6F81320FE3925F /* QuickConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A782244AFF9CAEAE21B9D22226697A2 /* QuickConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1246737DFF5F222B4BB30DED0B9A93F7 /* APIFire-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B11D27B16222A8D0A7864F63724F3C4 /* APIFire-dummy.m */; };
 		1291696393FFEA6F94FF1E0B79923B43 /* HooksPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF914E48EF1DC7074F4ADA4ADAE575 /* HooksPhase.swift */; };
+		1407D83424E47A5300B2B611 /* DataEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5354618CC0FEC9F8FF8B6863DFFC5856 /* DataEndpoints.swift */; };
+		1407D83624E47AD400B2B611 /* APIFireSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1407D83524E47AD400B2B611 /* APIFireSessionManager.swift */; };
 		1417D3C924E2F594004C1881 /* DownloadEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D3C724E2F58A004C1881 /* DownloadEndpoints.swift */; };
 		1417D3CB24E2F5B8004C1881 /* UploadEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1417D3CA24E2F5B8004C1881 /* UploadEndpoints.swift */; };
-		144BAA6C24DB3A1F00391298 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144BAA6B24DB3A1F00391298 /* APIManager.swift */; };
 		1471E10B24E0EF1F00CA2282 /* NoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1471E10924E0EF1C00CA2282 /* NoResponse.swift */; };
+		148F867D24E4885F00585943 /* AFResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F867C24E4885F00585943 /* AFResponse.swift */; };
+		148F867F24E48B4000585943 /* EndpointResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F867E24E48B4000585943 /* EndpointResult.swift */; };
 		14EB93B124DBB5D200B3A19F /* ResponseErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EB93AF24DBB4DF00B3A19F /* ResponseErrors.swift */; };
 		1662BEDD868AF1CD729C4269E69A3580 /* MatcherFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFECD5A453176269030F1B0C3E5A0BDE /* MatcherFunc.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		1E87C51D297EA030E7BC5F7EB4D334C3 /* AuthenticationInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06B58F26E2D9F8F51445FD2E6ED8106 /* AuthenticationInterceptor.swift */; };
@@ -73,7 +76,6 @@
 		5BBD03BFDE0772C39DBF0E1DC0414C46 /* ParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F945DC1447EB09C9AB649CBB48F5B4 /* ParameterEncoder.swift */; };
 		5C5F37347F9D7932A1562BD3316FDEE3 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD682FF6DCAF54DC6A268482C7A4DEB2 /* MultipartFormData.swift */; };
 		5C86EA505BBAAC27339CD254C73F1B6C /* ServerTrustEvaluation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5D47DD4D860A364CBF391019460A71 /* ServerTrustEvaluation.swift */; };
-		5C90C4D90F2EAED427F9468505F91932 /* DataEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5354618CC0FEC9F8FF8B6863DFFC5856 /* DataEndpoints.swift */; };
 		5CE5E8EA75E0B3DC5BE140B61DF37EFD /* Nimble-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CF02C3B7DB629976B4CB02EEF536AE /* Nimble-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5F178A7F7549B5D1DD889EA3FA871478 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C45268BA61BBA131BD6D01AF2D1F9E2 /* SessionDelegate.swift */; };
 		612CF413B2B58D3B1EE362CD09363484 /* HTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B526C7B093E33FE0B3197409BDDBF43 /* HTTPHeaders.swift */; };
@@ -245,10 +247,12 @@
 		0D631E9908483F9525A6B3F36F16CC61 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FED7C7DE37F4C6A27CC479F30BDCAD2 /* NimbleXCTestHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimbleXCTestHandler.swift; path = Sources/Nimble/Adapters/NimbleXCTestHandler.swift; sourceTree = "<group>"; };
 		109EA863E0A099CA41D2B63C1807F482 /* Nimble.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Nimble.h; path = Sources/Nimble/Nimble.h; sourceTree = "<group>"; };
+		1407D83524E47AD400B2B611 /* APIFireSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIFireSessionManager.swift; sourceTree = "<group>"; };
 		1417D3C724E2F58A004C1881 /* DownloadEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadEndpoints.swift; sourceTree = "<group>"; };
 		1417D3CA24E2F5B8004C1881 /* UploadEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadEndpoints.swift; sourceTree = "<group>"; };
-		144BAA6B24DB3A1F00391298 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		1471E10924E0EF1C00CA2282 /* NoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResponse.swift; sourceTree = "<group>"; };
+		148F867C24E4885F00585943 /* AFResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFResponse.swift; sourceTree = "<group>"; };
+		148F867E24E48B4000585943 /* EndpointResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointResult.swift; sourceTree = "<group>"; };
 		14EB93AF24DBB4DF00B3A19F /* ResponseErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseErrors.swift; sourceTree = "<group>"; };
 		17DD81D422888B0128436CE2CC01F1DF /* Quick-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Quick-dummy.m"; sourceTree = "<group>"; };
 		18E60A22F091E0EFBCCDE7AE0290402A /* QuickSpec.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QuickSpec.m; path = Sources/QuickObjectiveC/QuickSpec.m; sourceTree = "<group>"; };
@@ -605,7 +609,7 @@
 		144BAA6A24DB396400391298 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				1471E10C24E0F58F00CA2282 /* internal */,
+				1407D83524E47AD400B2B611 /* APIFireSessionManager.swift */,
 				EC171177E3895B7DF01C910ABE099855 /* CallbackCoordinator.swift */,
 				7F1C178310CDA804A78B7F7932A78C19 /* Endpoint.swift */,
 				5354618CC0FEC9F8FF8B6863DFFC5856 /* DataEndpoints.swift */,
@@ -613,6 +617,9 @@
 				1417D3CA24E2F5B8004C1881 /* UploadEndpoints.swift */,
 				14EB93AF24DBB4DF00B3A19F /* ResponseErrors.swift */,
 				1471E10924E0EF1C00CA2282 /* NoResponse.swift */,
+				148F867C24E4885F00585943 /* AFResponse.swift */,
+				1471E10C24E0F58F00CA2282 /* internal */,
+				148F867E24E48B4000585943 /* EndpointResult.swift */,
 			);
 			name = src;
 			path = APIFire/src;
@@ -622,7 +629,6 @@
 			isa = PBXGroup;
 			children = (
 				D0F6BEE1AA73C52FAF1FC9315BD92225 /* EndpointConstants.swift */,
-				144BAA6B24DB3A1F00391298 /* APIManager.swift */,
 				B275D660C58A803B22B796F3296850AA /* Utilities.swift */,
 			);
 			path = internal;
@@ -1200,16 +1206,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				1417D3C924E2F594004C1881 /* DownloadEndpoints.swift in Sources */,
+				148F867D24E4885F00585943 /* AFResponse.swift in Sources */,
 				1246737DFF5F222B4BB30DED0B9A93F7 /* APIFire-dummy.m in Sources */,
+				148F867F24E48B4000585943 /* EndpointResult.swift in Sources */,
 				1471E10B24E0EF1F00CA2282 /* NoResponse.swift in Sources */,
 				1417D3CB24E2F5B8004C1881 /* UploadEndpoints.swift in Sources */,
 				D3907E6B1C577894E9BC1A22FBD27E5F /* CallbackCoordinator.swift in Sources */,
-				144BAA6C24DB3A1F00391298 /* APIManager.swift in Sources */,
 				84F1A48AB06A74D8AB45B908FF9080E6 /* Endpoint.swift in Sources */,
 				FB0F92E80EAE6FDF99E477D44142640D /* EndpointConstants.swift in Sources */,
 				14EB93B124DBB5D200B3A19F /* ResponseErrors.swift in Sources */,
-				5C90C4D90F2EAED427F9468505F91932 /* DataEndpoints.swift in Sources */,
+				1407D83624E47AD400B2B611 /* APIFireSessionManager.swift in Sources */,
 				A0F8F4A22A3E75CD5F34E8930053DDB8 /* Utilities.swift in Sources */,
+				1407D83424E47A5300B2B611 /* DataEndpoints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

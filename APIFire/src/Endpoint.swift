@@ -32,8 +32,14 @@ public protocol Endpoint {
 
     /// How to encode the parameters - default is JSON for POST and QueryString for GET requests
     var parameterEncoding: ParameterEncoding { get }
+}
 
-    func startCall(inSession session: Session)
+public protocol CallableEndpoint: Endpoint {
+    associatedtype ResponseType
+
+    func call(onCompletion: @escaping EndpointCompletionBlock<ResponseType>)
+
+    func startCall(inSession session: Session, completion: @escaping EndpointCompletionBlock<ResponseType>)
 }
 
 // MARK: - Extra Feature Protocols
@@ -85,6 +91,12 @@ public extension Endpoint {
 
     var headers: HTTPHeaders {
         return [:]
+    }
+}
+
+public extension CallableEndpoint {
+    func call(onCompletion: @escaping EndpointCompletionBlock<ResponseType> = { (_) in }) {
+        APIFireSessionManager.shared.call(containedEndpoint: CallableContainer(endpoint: self), onCompletion: onCompletion)
     }
 }
 

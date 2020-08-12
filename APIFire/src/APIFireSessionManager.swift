@@ -10,16 +10,16 @@ import Foundation
 import Alamofire
 
 /// The singleton object that coordinates the Alamofire Session objects to perform API calls.
-internal final class APIManager {
-    static private var __singleton: APIManager? = nil
+public final class APIFireSessionManager {
+    static private var __singleton: APIFireSessionManager? = nil
 
     /// The shared instance of the API Manager
-    static var shared: APIManager {
+    public static var shared: APIFireSessionManager {
         if let oneoff = __singleton {
             return oneoff
         }
 
-        let newly = APIManager()
+        let newly = APIFireSessionManager()
         __singleton = newly
         return newly
     }
@@ -30,15 +30,13 @@ internal final class APIManager {
 
     /// Perform the Endpoint call using an existing Session, or creating a new one if needs be.
     /// - Parameter endpoint: The Endpoint object to call.
-    func call(_ endpoint: Endpoint) {
-        guard let session = buildSessionAndValidate(for: endpoint) else {
+    public func call<EndpointType>(containedEndpoint container: CallableContainer<EndpointType>, onCompletion: @escaping EndpointCompletionBlock<EndpointType.ResponseType>) {
+        guard let session = buildSessionAndValidate(for: container.endpoint) else {
             // The preflight failed but should have been logged and called back by the build function
             return
         }
 
-        aflog.info("APIFire: Starting call...\n\tEndpoint: \(endpoint.completeURL)\n\tMethod: \(endpoint.httpMethod)\n\tParams: \(endpoint.parameters)")
-
-        endpoint.startCall(inSession: session)
+        container.coordinateCall(in: session, completion: onCompletion)
     }
 
     private func buildSessionAndValidate(for endpoint: Endpoint) -> Session? {
@@ -64,5 +62,19 @@ internal final class APIManager {
         }
 
         return session
+    }
+}
+
+public struct CallableContainer<Call: CallableEndpoint> {
+    let endpoint: Call
+
+    public init(endpoint: Call) {
+        self.endpoint = endpoint
+    }
+
+    func coordinateCall(in session: Session, completion: @escaping EndpointCompletionBlock<Call.ResponseType>) {
+        aflog.info("APIFire: Starting call...\n\tEndpoint: \(endpoint.completeURL)\n\tMethod: \(endpoint.httpMethod)\n\tParams: \(endpoint.parameters)")
+
+        endpoint.startCall(inSession: session, completion: completion)
     }
 }

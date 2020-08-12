@@ -8,7 +8,7 @@
 import Alamofire
 
 /// The base endpoint type for an endpoint that uploads a data payload
-public protocol UploadEndpoint: Endpoint {
+public protocol UploadEndpoint: CallableEndpoint where ResponseType == AFDataResponse<Data?> {
     /// Override the Endpoint parameterEncoding type with URLEncoding, as it's the only valid way to encode parameters to an Upload.
     var parameterEncoding: URLEncoding { get }
 
@@ -42,7 +42,7 @@ public extension UploadEndpoint {
         return URLEncoding(destination: .queryString)
     }
 
-    func startCall(inSession session: Session) {
+    func startCall(inSession session: Session, onCompletion: @escaping EndpointCompletionBlock<AFDataResponse<Data?>>) {
         if let loggableSelf = self as? WithLogging {
             loggableSelf.logAtStartOfCall()
         }
@@ -50,12 +50,14 @@ public extension UploadEndpoint {
         self.makeUploadRequest(session)
             .uploadProgress { self.uploadProgress($0) }
             .downloadProgress { self.downloadProgress($0) }
-            .response {
+            .response { (r: AFDataResponse<Data?>) in
                 if let loggableSelf = (self as? WithLogging) {
-                    loggableSelf.logCallCompletion(response: $0)
+                    loggableSelf.logCallCompletion(response: r)
                 }
-                self.uploadCompleted($0)
 
+                self.uploadCompleted(r)
+                
+                onCompletion(EndpointResult(r))
         }
     }
 

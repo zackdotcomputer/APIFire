@@ -10,20 +10,29 @@ import Foundation
 import Alamofire
 
 /// A generic root class for errors that happen while trying to deal with problems with the Alamofire response
-public class ResponseError<SuccessType>: Error {
+open class ResponseError<SuccessType>: Error {
     public let response: AFDataResponse<SuccessType>
 
     public var aferror: AFError? {
         return response.error
     }
 
-    init(response: AFDataResponse<SuccessType>) {
+    public init(response: AFDataResponse<SuccessType>) {
         self.response = response
     }
 }
 
-/// An error for when the call to the server times out
-public class TimeoutError<SuccessType>: ResponseError<SuccessType> {}
+/// An error for when the request timed out
+public protocol TimeoutError: Error {}
+public class TimeoutErrorWithResponse<SuccessType>: ResponseError<SuccessType>, TokenExpired {}
+
+/// An error for when the token we're using is expired
+public protocol TokenExpired: Error {}
+public class TokenExpiredErrorWithResponse<SuccessType>: ResponseError<SuccessType>, TokenExpired {}
+
+/// An error for when the response cannot be deserialized as valid JSON
+public protocol MalformedBody: Error {}
+public class MalformedBodyErrorWithResponse<SuccessType>: ResponseError<SuccessType>, MalformedBody {}
 
 /// An error for when an endpoint returns a non-200 repsonse with a deserializable body
 public class NotOkResponseError<SuccessType>: ResponseError<SuccessType> {
@@ -32,5 +41,4 @@ public class NotOkResponseError<SuccessType>: ResponseError<SuccessType> {
     }
 }
 
-/// An error for when the response cannot be deserialized as valid JSON or as the JSON type expected
-public class MalformedBodyError<SuccessType>: ResponseError<SuccessType> {}
+public class InvalidInternalStateError: Error {}
