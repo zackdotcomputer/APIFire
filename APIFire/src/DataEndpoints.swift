@@ -23,6 +23,10 @@ public protocol DeserializingEndpoint: DataEndpoint, CallableEndpoint where Resp
     /// The queue on which to run the Alamofire call and, relatedly, the onCompletion blocks
     var queue: DispatchQueue { get }
 
+    /// The data preprocessor - see Alamofire for more information.
+    var dataPreprocessor: DataPreprocessor { get }
+    var decoder: DataDecoder { get }
+
     /// Transform an error thrown preflight. By default, passes the `Error` to the callbacks untransformed.
     /// You can add a custom handler to digest error messages into meaningful `ResponseType`s.
     func transformError(_ error: Error) -> EndpointResult<ResponseType>
@@ -63,6 +67,15 @@ public extension DeserializingEndpoint {
         return .main
     }
 
+    var dataPreprocessor: DataPreprocessor {
+        // NOTE(zack): The type of decodable here doesn't matter cause defaultDataPreprocessor is untyped.
+        return DecodableResponseSerializer<String>.defaultDataPreprocessor
+    }
+
+    var decoder: DataDecoder {
+        return JSONDecoder()
+    }
+
     func startCall(inSession session: Session, completion: @escaping EndpointCompletionBlock<ResponseType>) {
         let call = session.request(
             completeURL,
@@ -76,7 +89,7 @@ public extension DeserializingEndpoint {
             loggableSelf.logAtStartOfCall()
         }
 
-        call.responseDecodable(queue: self.queue) { (r: AFDataResponse<ResponseType>) in
+        call.responseDecodable(queue: self.queue, dataPreprocessor: self.dataPreprocessor, decoder: self.decoder) { (r: AFDataResponse<ResponseType>) in
             if let loggableSelf = self as? WithLogging {
                 loggableSelf.logCallCompletion(response: r)
             }
