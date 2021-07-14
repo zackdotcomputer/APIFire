@@ -618,8 +618,8 @@
 				14EB93AF24DBB4DF00B3A19F /* ResponseErrors.swift */,
 				1471E10924E0EF1C00CA2282 /* NoResponse.swift */,
 				148F867C24E4885F00585943 /* AFResponse.swift */,
-				1471E10C24E0F58F00CA2282 /* internal */,
 				148F867E24E48B4000585943 /* EndpointResult.swift */,
+				1471E10C24E0F58F00CA2282 /* internal */,
 			);
 			name = src;
 			path = APIFire/src;

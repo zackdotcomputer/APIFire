@@ -80,7 +80,7 @@ public extension DeserializingEndpoint {
         let call = session.request(
             completeURL,
             method: httpMethod,
-            parameters: parameters as Parameters,
+            parameters: compactParameters(),
             encoding: parameterEncoding,
             headers: headers
         )

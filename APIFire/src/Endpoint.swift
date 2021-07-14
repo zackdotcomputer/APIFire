@@ -25,6 +25,7 @@ public protocol Endpoint {
     var httpMethod: HTTPMethod { get }
 
     /// Parameters to pass to the endpoint - default is to pass no parameters
+    /// - NOTE: that values in the map may be `nil`, but those values will be trimmed before sending.
     var parameters: EndpointParameters { get }
 
     /// Custom headers to use for the call - default is to pass no custom headers
@@ -91,6 +92,10 @@ public extension Endpoint {
 
     var headers: HTTPHeaders {
         return [:]
+    }
+
+    func compactParameters() -> Alamofire.Parameters {
+        parameters.compactMapValues { $0 }
     }
 }
 

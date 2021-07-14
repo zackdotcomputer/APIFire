@@ -33,7 +33,7 @@ public extension DownloadToFileEndpoint {
         let task = session.download(
             completeURL,
             method: httpMethod,
-            parameters: parameters as Parameters,
+            parameters: compactParameters(),
             encoding: parameterEncoding,
             headers: headers,
             to: destination
