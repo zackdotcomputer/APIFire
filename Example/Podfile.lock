@@ -1,16 +1,16 @@
 PODS:
-  - Alamofire (5.2.2)
-  - APIFire (0.1.0):
-    - Alamofire (~> 5.2)
-    - Logging (~> 1.2)
-  - Logging (1.2.0)
-  - Nimble (7.3.4)
-  - Quick (1.2.0)
+  - Alamofire (5.7.1)
+  - APIFire (1.0.0):
+    - Alamofire (~> 5.7)
+    - Logging (~> 1.4)
+  - Logging (1.4.0)
+  - Nimble (11.2.2)
+  - Quick (6.1.0)
 
 DEPENDENCIES:
   - APIFire (from `../`)
-  - Nimble (~> 7.0)
-  - Quick (~> 1.2.0)
+  - Nimble (~> 11.2)
+  - Quick (~> 6.1)
 
 SPEC REPOS:
   trunk:
@@ -24,12 +24,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
-  APIFire: 110b4219dfcd70958738de068e6ae017eabc9624
-  Logging: 7838d379d234d7e5ae1265fa02804a9084caf04c
-  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  APIFire: 24eb9b058195f4074d5e70280aa9ff6eeb5c9d8c
+  Logging: beeb016c9c80cf77042d62e83495816847ef108b
+  Nimble: 01a944d4d07eab73617dfd4b32ac9f7152ac34de
+  Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
 
-PODFILE CHECKSUM: cadff11916477f1f03b650e1f19f92b3c3955b7c
+PODFILE CHECKSUM: aae344d799ba1536ce3d4d4cc82d49f4aa3486ff
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.12.1

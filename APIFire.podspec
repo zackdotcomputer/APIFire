@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'APIFire'
-  s.version          = '0.3.0'
+  s.version          = '1.0.0'
   s.summary          = 'A lightweight toolkit for querying APIs, built on top of Alamofire.'
 
 # This description is used to generate tags and improve search results.
@@ -30,13 +30,12 @@ URLSession calls) to do over-the-wire communication, and uses Decodable to conve
   s.source           = { :git => 'https://github.com/zackdotcomputer/APIFire.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-# Copied from Alamofire 5.2.2 - intentionally mirrors their compatability
-  s.ios.deployment_target = '10.0'
-  s.osx.deployment_target = '10.12'
-  s.tvos.deployment_target = '10.0'
-  s.watchos.deployment_target = '3.0'
+  s.ios.deployment_target = '13.0'
+  s.osx.deployment_target = '10.15'
+  s.tvos.deployment_target = '13.0'
+  s.watchos.deployment_target = '4.0'
 
-  s.swift_versions = ['5.1', '5.2']
+  s.swift_versions = ['5.1', '5.2', '5.3', '5.4', '5.5']
 
   s.source_files = 'APIFire/src/**/*'
   
@@ -46,6 +45,6 @@ URLSession calls) to do over-the-wire communication, and uses Decodable to conve
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'Alamofire', '~> 5.2'
-  s.dependency 'Logging', '~> 1.2'
+  s.dependency 'Alamofire', '~> 5.7'
+  s.dependency 'Logging', '~> 1.4'
 end

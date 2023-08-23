@@ -2,6 +2,6 @@ use_frameworks!
 target 'APIFire_Tests' do
   pod 'APIFire', :path => '../'
   
-  pod 'Quick', '~> 1.2.0'
-  pod 'Nimble', '~> 7.0'
+  pod 'Quick', '~> 6.1'
+  pod 'Nimble', '~> 11.2'
 end
