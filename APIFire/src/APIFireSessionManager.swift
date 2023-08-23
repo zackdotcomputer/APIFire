@@ -45,7 +45,7 @@ public final class APIFireSessionManager {
             do {
                 try toValidate.validatePreflight()
             } catch {
-                aflog.warning("Download from \(endpoint.completeURL) failed in preflight\n\(String(describing: error))")
+                // aflog.warning("Download from \(endpoint.completeURL) failed in preflight\n\(String(describing: error))")
                 toValidate.preflightFailed(error)
                 return nil
             }
@@ -56,7 +56,7 @@ public final class APIFireSessionManager {
         if let existing = alamofireSessions[endpoint.timeout] {
             session = existing
         } else {
-            aflog.trace("APIFire: Creating new alamofire instance for timeout \(endpoint.timeout)")
+            // aflog.trace("APIFire: Creating new alamofire instance for timeout \(endpoint.timeout)")
             session = alamoFireWithCustomTimeout(endpoint.timeout)
             alamofireSessions[endpoint.timeout] = session
         }
@@ -73,7 +73,7 @@ public struct CallableContainer<Call: CallableEndpoint> {
     }
 
     func coordinateCall(in session: Session, completion: @escaping EndpointCompletionBlock<Call.ResponseType>) {
-        aflog.info("APIFire: Starting call...\n\tEndpoint: \(endpoint.completeURL)\n\tMethod: \(endpoint.httpMethod)\n\tParams: \(endpoint.parameters)")
+        // aflog.info("APIFire: Starting call...\n\tEndpoint: \(endpoint.completeURL)\n\tMethod: \(endpoint.httpMethod)\n\tParams: \(endpoint.parameters)")
 
         endpoint.startCall(inSession: session, completion: completion)
     }

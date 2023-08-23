@@ -7,12 +7,10 @@
 
 import Foundation
 
-import Logging
-
 import Alamofire
 
 /// The APIFire logger instance
-internal let aflog = Logger(label: "computer.zack.APIFire")
+// internal let aflog = Logger(label: "computer.zack.APIFire")
 
 /// - Parameter timeout: The timeout for requests and resource fetches the new instance should use.
 /// - Returns: A new AlamoFire `Session` with your specified timeout interval
