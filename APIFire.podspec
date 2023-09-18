@@ -35,15 +35,9 @@ URLSession calls) to do over-the-wire communication, and uses Decodable to conve
   s.tvos.deployment_target = '13.0'
   s.watchos.deployment_target = '4.0'
 
-  s.swift_versions = ['5.1', '5.2', '5.3', '5.4', '5.5']
+  s.swift_versions = ['5.5', '5.6', '5.7', '5.8', '5.9']
 
-  s.source_files = 'Sources/APIFire/**/*'
-  
-  # s.resource_bundles = {
-  #   'APIFire' => ['APIFire/Assets/*.png']
-  # }
+  s.source_files = 'Source/**/*'
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'Alamofire', '~> 5.7'
 end
