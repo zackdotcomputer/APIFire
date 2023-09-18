@@ -14,4 +14,10 @@
 
 Reviving the package after a long hiatus, updating dependencies to latest.
 
-## 1.1.0 - Swift Package Manager Support
+## 2.0.0 - Swift Package Manager Support
+
+This is essentially what 1.0.0 should have been.
+
+It gets a new major version because 1) it adds Swift Package Manger Support and 2) it officially drops support for Swift versions prior to 5.5 on Cocoapods. (This change was already implicit in Alamofire, so attempting to use 1.x on a Swift 5.1 project would already have broken, but now that it's explicit I figured it should get a major version bump.)
+
+Because Swift Package Manager expects a major revision to all be good for its purposes, that alone would require a major bump.
