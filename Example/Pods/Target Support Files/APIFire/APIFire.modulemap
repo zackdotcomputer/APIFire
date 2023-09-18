@@ -1,6 +1,0 @@
-framework module APIFire {
-  umbrella header "APIFire-umbrella.h"
-
-  export *
-  module * { export * }
-}

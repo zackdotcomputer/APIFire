@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'APIFire'
-  s.version          = '1.0.1'
+  s.version          = '1.1.0'
   s.summary          = 'A lightweight toolkit for querying APIs, built on top of Alamofire.'
 
 # This description is used to generate tags and improve search results.
@@ -37,7 +37,7 @@ URLSession calls) to do over-the-wire communication, and uses Decodable to conve
 
   s.swift_versions = ['5.1', '5.2', '5.3', '5.4', '5.5']
 
-  s.source_files = 'APIFire/src/**/*'
+  s.source_files = 'Sources/APIFire/**/*'
   
   # s.resource_bundles = {
   #   'APIFire' => ['APIFire/Assets/*.png']
